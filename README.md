@@ -40,6 +40,10 @@ velocity_pub.cpp: node for controlling velocity.
 
 wrap.cpp: wrap api to make code clean and easy to program
 
+testMotion: subscribes to /cmd_vel and give velocity command to each motor.
+
+pub_cmdvel: used for testing testMotion
+
 ### include
 
 headings
