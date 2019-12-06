@@ -13,14 +13,12 @@ void callback(const geometry_msgs::Vector3 &vel)
 	Vx=vel.x;
 	Vy=vel.y;
 	w=vel.z;
-	// from https://www.maxongroup.fr/medias/sys_master/root/8806895255582/13-216-en.pdf
-		
-
+	
 	v1 = Vy + w*z;
 	v2 = ((-sqrt(3)/2)*Vx) + (-0.5*Vy) + w*z;
 	v3 = (sqrt(3)/2)*Vx + (-0.5*Vy) + w*z;
 
-	
+	// Moving with calculated velocities
 	MoveWithVelocity(g_pKeyHandle, 1, (long)v1, &ulErrorCode);
 	MoveWithVelocity(g_pKeyHandle, 2, (long)v2, &ulErrorCode);
 	//MoveWithVelocity(g_pKeyHandle, 3, (long)v3, &ulErrorCode);
@@ -42,14 +40,16 @@ int main(int argc, char **argv)
 		return lResult;
 	}
 	
-	//Activate both driver
+	//Activate all drivers
 	SetEnableState(g_pKeyHandle, 1, &ulErrorCode);
 	ActivateProfileVelocityMode(g_pKeyHandle, 1, &ulErrorCode);
 	SetEnableState(g_pKeyHandle, 2, &ulErrorCode);
 	ActivateProfileVelocityMode(g_pKeyHandle, 2, &ulErrorCode);
+	//SetEnableState(g_pKeyHandle, 3, &ulErrorCode);
+	//ActivateProfileVelocityMode(g_pKeyHandle, 3, &ulErrorCode);
 	
 	// initialising ros stuffs
-	ros::init(argc, argv, "listen");
+	ros::init(argc, argv, "control");
 	ros::NodeHandle n;
 	ros::Subscriber sub = n.subscribe("epos2/cmd_vel" , 1000 ,&callback);
 	ros::spin();
