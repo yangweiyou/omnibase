@@ -10,10 +10,11 @@ int main(int argc, char **argv)
 	ros::NodeHandle n;
 	ros::Publisher pub = n.advertise<geometry_msgs::Vector3>("/epos2/cmd_vel",1000);
 	
-	long int Vx,Vy;
+	long int Vx,Vy,w;
 	geometry_msgs::Vector3 tmp;	
 	ROS_INFO("Enter Vx"); cin >> Vx; tmp.x=Vx;
 	ROS_INFO("Enter Vy"); cin >> Vy; tmp.y=Vy;
+	ROS_INFO("Enter w"); cin >> w; tmp.z=w;
 	pub.publish(tmp);
 	ros::spin();
 }
