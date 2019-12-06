@@ -7,23 +7,18 @@ void callback(const geometry_msgs::Vector3 &vel)
 {
 	unsigned int ulErrorCode = 0;
 	long int Vx,Vy,w,v1,v2,v3;
+	int z=23.4;// in cm
 	//ROS_INFO("Enter Vx"); cin >> Vx;
 	//ROS_INFO("Enter Vy"); cin >> Vy;
 	Vx=vel.x;
 	Vy=vel.y;
-
-	if (Vx==0 && Vy ==0)
-		w=0;
-	else if (Vx<1000 || Vy<1000)
-		w=30;
-	else 
-		w=60;
+	w=vel.z;
 	// from https://www.maxongroup.fr/medias/sys_master/root/8806895255582/13-216-en.pdf
 		
 
-	v1 = Vy + w;
-	v2 = ((-sqrt(3)/2)*Vx) + (-0.5*Vy) + w;
-	v3 = (sqrt(3)/2)*Vx + (-0.5*Vy) + w;
+	v1 = Vy + w*z;
+	v2 = ((-sqrt(3)/2)*Vx) + (-0.5*Vy) + w*z;
+	v3 = (sqrt(3)/2)*Vx + (-0.5*Vy) + w*z;
 
 	
 	MoveWithVelocity(g_pKeyHandle, 1, (long)v1, &ulErrorCode);
