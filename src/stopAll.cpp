@@ -44,3 +44,4 @@ int lResult = MMC_FAILED;
 		LogError("CloseDevice", lResult, ulErrorCode);
 		return lResult;
 	}
+}
