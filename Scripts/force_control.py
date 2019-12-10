@@ -2,12 +2,12 @@
 import rospy
 import time
 from geometry_msgs.msg import WrenchStamped 
-from geometry_msgs.msg import Vector3
+from geometry_msgs.msg import Vector3Stamped
 
-max_vel = 0.5
-max_yaw = 0.5
+max_vel = 500
+max_yaw = 500
 
-pub = rospy.Publisher('/epos2/cmd_vel', Vector3, queue_size=10)
+pub = rospy.Publisher('/epos2/cmd_vel', Vector3Stamped, queue_size=10)
 
 
 def cb_once(data):
@@ -17,22 +17,17 @@ def cb_once(data):
     sub_once.unregister()
 
 global sub_once
-sub_once = rospy.Subscriber("/netft_data",WrenchStamped,cb_once)
-
-def filter(data,maximun,minimun):
-    if abs(data) > maximun:
-       return maximun
-    elif abs(data) < minimun:
-       return 0.0
-    else:
-       return data
+sub_once = rospy.Subscriber("/force",WrenchStamped,cb_once)
 
 def callback(data):
-    range_fx = 5
-    v_x = filter((data.wrench.force.x-init_fx)/range_fx,1,0.1)
-    v_x = v_x*max_vel
 
-    tmp = Vector(v_x,0,0)
+    v_x = data.wrench.force.x-init_fx*max_vel
+    now = rospy-get_rostime()
+
+    tmp = Vector3()
+    tmp.vector.x=v_x
+    tmp.vector.y=tmp.vector.z=0
+    tmp.header.stamp = now
     pub.publish(tmp)
 
 if __name__ == '__main__':
@@ -42,4 +37,3 @@ if __name__ == '__main__':
     print "Start FT Control" 
     print "Initial fx =" + str(init_fx)
     rospy.spin()
-
