@@ -144,6 +144,7 @@ add_executable(position_pub src/position_pub.cpp src/wrap.cpp)
 add_executable(testMotion src/testMotion.cpp src/wrap.cpp)
 add_executable(stopAll src/stopAll.cpp src/wrap.cpp)
 add_executable(pub_cmdVel src/pub_cmdVel.cpp src/wrap.cpp)
+add_executable(ADS_test src/ADS_test.cpp src/wrap.cpp)
 
 
 ## Rename C++ executable without prefix
@@ -159,6 +160,7 @@ add_dependencies(position_pub epos2_gencpp)
 add_dependencies(testMotion epos2_gencpp)
 add_dependencies(stopAll epos2_gencpp)
 add_dependencies(pub_cmdVel epos2_gencpp)
+add_dependencies(ADS_test epos2_gencpp)
 
 ## Specify libraries to link a library or executable target against
 
@@ -183,6 +185,11 @@ target_link_libraries(stopAll
 )
 
 target_link_libraries(pub_cmdVel
+  ${catkin_LIBRARIES}
+  EposCmd
+)
+
+target_link_libraries(ADS_test
   ${catkin_LIBRARIES}
   EposCmd
 )
