@@ -8,8 +8,6 @@ void callback(const geometry_msgs::Vector3 &vel)
 	unsigned int ulErrorCode = 0;
 	long int Vx,Vy,w,v1,v2,v3;
 	int z=23.4;// in cm
-	//ROS_INFO("Enter Vx"); cin >> Vx;
-	//ROS_INFO("Enter Vy"); cin >> Vy;
 	Vx=vel.x;
 	Vy=vel.y;
 	w=vel.z;
