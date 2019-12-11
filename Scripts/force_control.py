@@ -2,12 +2,12 @@
 import rospy
 import time
 from geometry_msgs.msg import WrenchStamped 
-from geometry_msgs.msg import Vector3Stamped
+from geometry_msgs.msg import Twist
+from geometry_msgs.msg import Vector3
 
-max_vel = 500
-max_yaw = 500
+max_vel =100
 
-pub = rospy.Publisher('/epos2/cmd_vel', Vector3Stamped, queue_size=10)
+pub = rospy.Publisher('/epos2/cmd_vel', Twist, queue_size=10)
 
 
 def cb_once(data):
@@ -21,13 +21,12 @@ sub_once = rospy.Subscriber("/force",WrenchStamped,cb_once)
 
 def callback(data):
 
-    v_x = data.wrench.force.x-init_fx*max_vel
-    now = rospy-get_rostime()
+    v_x = (data.wrench.force.x-init_fx)*max_vel
+    #now = rospy-get_rostime()
 
-    tmp = Vector3()
-    tmp.vector.x=v_x
-    tmp.vector.y=tmp.vector.z=0
-    tmp.header.stamp = now
+    tmp = Twist()
+    tmp.linear = Vector3(v_x,0,0)
+    tmp.angular = Vector3(0,0,0)
     pub.publish(tmp)
 
 if __name__ == '__main__':
