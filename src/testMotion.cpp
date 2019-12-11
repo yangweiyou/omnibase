@@ -1,18 +1,18 @@
 #include "ros/ros.h"
 #include "epos2/Velocity.h"
 #include "wrap.h"
-#include "geometry_msgs/Vector3.h"
+#include "geometry_msgs/Twist.h"
 
-void callback(const geometry_msgs::Vector3 &vel)
+void callback(const geometry_msgs::Twist &vel)
 {
+	now = ros::Time::now();	
 	unsigned int ulErrorCode = 0;
 	long int Vx,Vy,w,v1,v2,v3;
 	int z=23.4;// in cm
-	Vx=vel.x;
-	Vy=vel.y;
-	w=vel.z;
-	
-	v1 = Vy + w*z;
+	Vx=vel.linear.x;
+	Vy=vel.linear.y;
+	w=vel.angular.z;
+	v1 = Vy + w*z;	
 	v2 = ((-sqrt(3)/2)*Vx) + (-0.5*Vy) + w*z;
 	v3 = (sqrt(3)/2)*Vx + (-0.5*Vy) + w*z;
 
@@ -20,6 +20,8 @@ void callback(const geometry_msgs::Vector3 &vel)
 	MoveWithVelocity(g_pKeyHandle, 1, (long)v1, &ulErrorCode);
 	MoveWithVelocity(g_pKeyHandle, 2, (long)v2, &ulErrorCode);
 	//MoveWithVelocity(g_pKeyHandle, 3, (long)v3, &ulErrorCode);
+	
+
 }
 
 
@@ -45,6 +47,7 @@ int main(int argc, char **argv)
 	ActivateProfileVelocityMode(g_pKeyHandle, 2, &ulErrorCode);
 	//SetEnableState(g_pKeyHandle, 3, &ulErrorCode);
 	//ActivateProfileVelocityMode(g_pKeyHandle, 3, &ulErrorCode);
+	
 	
 	// initialising ros stuffs
 	ros::init(argc, argv, "control");
