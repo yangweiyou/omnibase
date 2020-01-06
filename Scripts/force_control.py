@@ -30,11 +30,11 @@ def filter(data,maximun,minimun):
        return data
 
 def callback(data):
-    range_fx = 5
+    range_fx = 100
     v_x = filter((data.wrench.force.x-init_fx)/range_fx,1,0.1)
     v_x = v_x*max_vel
 
-    range_fy = 5
+    range_fy = 100
     v_yaw = filter((data.wrench.force.y-init_fy)/range_fy,1,0.1)
     v_yaw = v_yaw*max_yaw
 
