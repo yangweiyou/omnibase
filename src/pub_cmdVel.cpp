@@ -1,5 +1,5 @@
 #include "ros/ros.h"
-#include "epos2/Velocity.h"
+#include "omnibase/Velocity.h"
 #include "wrap.h"
 #include "geometry_msgs/Twist.h"
 
@@ -8,7 +8,7 @@ int main(int argc, char **argv)
 	// initialising ros stuffs
 	ros::init(argc, argv, "pub_vel");
 	ros::NodeHandle n;
-	ros::Publisher pub = n.advertise<geometry_msgs::Twist>("/epos2/cmd_vel",1000);
+	ros::Publisher pub = n.advertise<geometry_msgs::Twist>("/omnibase/cmd_vel",1000);
 	
 	long int Vx,Vy,w;
 	geometry_msgs::Twist tmp;	

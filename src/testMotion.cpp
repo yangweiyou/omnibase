@@ -1,11 +1,10 @@
 #include "ros/ros.h"
-#include "epos2/Velocity.h"
+#include "omnibase/Velocity.h"
 #include "wrap.h"
 #include "geometry_msgs/Twist.h"
 
 void callback(const geometry_msgs::Twist &vel)
 {
-	now = ros::Time::now();	
 	unsigned int ulErrorCode = 0;
 	long int Vx,Vy,w,v1,v2,v3;
 	int z=23.4;// in cm
@@ -52,7 +51,7 @@ int main(int argc, char **argv)
 	// initialising ros stuffs
 	ros::init(argc, argv, "control");
 	ros::NodeHandle n;
-	ros::Subscriber sub = n.subscribe("epos2/cmd_vel" , 1000 ,&callback);
+	ros::Subscriber sub = n.subscribe("omnibase/cmd_vel" , 1000 ,&callback);
 	ros::spin();
 }
  

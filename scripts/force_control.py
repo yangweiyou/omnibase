@@ -16,6 +16,14 @@ def cb_once(data):
     init_fx = data.wrench.force.x
     global init_fy
     init_fy = data.wrench.force.y
+    global init_fz
+    init_fz = data.wrench.force.z
+    global init_tx
+    init_tx = data.wrench.torque.x
+    global init_ty
+    init_ty = data.wrench.torque.y
+    global init_tz
+    init_tz = data.wrench.torque.z
     sub_once.unregister()
 
 global sub_once

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(epos2)
+project(omnibase)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -12,6 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   message_generation
+  tf
 )
 
 ## System dependencies are found with CMake's conventions
@@ -122,7 +123,7 @@ catkin_package(
 include_directories(
 # include
   ${catkin_INCLUDE_DIRS}
-  include/epos2
+  include/omni
 )
 message(${catkin_INCLUDE_DIRS})
 ## Declare a C++ library
@@ -139,12 +140,10 @@ message(${catkin_INCLUDE_DIRS})
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 
-add_executable(velocity_pub src/velocity_pub.cpp src/wrap.cpp)
-add_executable(position_pub src/position_pub.cpp src/wrap.cpp)
 add_executable(testMotion src/testMotion.cpp src/wrap.cpp)
-add_executable(stopAll src/stopAll.cpp src/wrap.cpp)
 add_executable(pub_cmdVel src/pub_cmdVel.cpp src/wrap.cpp)
-add_executable(ADS_test src/ADS_test.cpp src/wrap.cpp)
+add_executable(omni_odom src/omni_odom.cpp src/wrap.cpp)
+add_executable(base_controller src/base_controller.cpp src/wrap.cpp)
 
 
 ## Rename C++ executable without prefix
@@ -155,31 +154,19 @@ add_executable(ADS_test src/ADS_test.cpp src/wrap.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-add_dependencies(velocity_pub epos2_gencpp)
-add_dependencies(position_pub epos2_gencpp)
-add_dependencies(testMotion epos2_gencpp)
-add_dependencies(stopAll epos2_gencpp)
-add_dependencies(pub_cmdVel epos2_gencpp)
-add_dependencies(ADS_test epos2_gencpp)
+add_dependencies(testMotion omnibase_gencpp)
+add_dependencies(base_controller omnibase_gencpp)
+add_dependencies(pub_cmdVel omnibase_gencpp)
+add_dependencies(omni_odom omnibase_gencpp)
 
 ## Specify libraries to link a library or executable target against
-
-target_link_libraries(velocity_pub
-  ${catkin_LIBRARIES}
-  EposCmd
-)
-
-target_link_libraries(position_pub
-  ${catkin_LIBRARIES}
-  EposCmd
-)
 
 target_link_libraries(testMotion
   ${catkin_LIBRARIES}
   EposCmd
 )
 
-target_link_libraries(stopAll
+target_link_libraries(base_controller
   ${catkin_LIBRARIES}
   EposCmd
 )
@@ -189,7 +176,7 @@ target_link_libraries(pub_cmdVel
   EposCmd
 )
 
-target_link_libraries(ADS_test
+target_link_libraries(omni_odom
   ${catkin_LIBRARIES}
   EposCmd
 )

@@ -1,5 +1,5 @@
 #include "ros/ros.h"
-#include "epos2/Velocity.h"
+#include "omnibase/Velocity.h"
 #include "wrap.h"
 #include "geometry_msgs/Twist.h"
 #include "time.h"
@@ -68,7 +68,7 @@ int main ( int argc, char **argv )
 
     ros::init ( argc, argv, "control" );
     ros::NodeHandle n;
-    ros::Subscriber sub = n.subscribe ( "epos2/cmd_vel" , 5 ,&callback );
+    ros::Subscriber sub = n.subscribe ( "omnibase/cmd_vel" , 5 ,&callback );
     ros::spin();
 }
 
