@@ -1,6 +1,6 @@
-# epos2
+# omnibase
 
-maxon DC motor current control, communicate with rospy
+ROS drivers for 3-wheel omnibase robot using epos2 motor drivers
 
 ## Protocal
 
@@ -36,13 +36,13 @@ for driver and library, find 'EPOS_Linux_Library' on maxon official site(https:/
 
 ### src
 
-velocity_pub.cpp: node for controlling velocity.
+base_controller.cpp: node to enable motors and subscribing to /omnibase/cmd_vel.
 
 wrap.cpp: wrap api to make code clean and easy to program
 
-testMotion: subscribes to /cmd_vel and give velocity command to each motor.
+omni_odom : calculates robot's odometry using cmd_vel and publishes /odom.
 
-pub_cmdvel: used for testing testMotion
+pub_cmdvel: used for testing cmd_vel
 
 ### include
 
@@ -50,13 +50,12 @@ headings
 
 ## Usages
 
-use as a ros package, put the whole epos2 files under workspace/src and compile with catkin
+use as a ros package, put the folder under workspace/src and compile with catkin_make
 
 	#under ${workspace}
 	catkin_make
 	roscore
-	rosrun epos2 velocity_pub
-	code will prompt for input
+	rosrun omnibase base_controller
 
 ## Benchmark
 
