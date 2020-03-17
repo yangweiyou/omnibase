@@ -9,11 +9,6 @@
 
 void callback ( const geometry_msgs::Twist &vel )
 {
-//     ros::NodeHandle nh;
-//     ros::Publisher time_diff = nh.advertise<std_msgs::Duration> ( "/time_diff",10 );
-//     std_msgs::Duration diff;
-//     ros::Time start = ros::Time::now();
-  
     uint ulErrorCode = 0;
     double Vx,Vy,w,v1,v2,v3;
     double z=0.20; // the distance between a wheel and the center of base (unit: meter)
@@ -32,15 +27,9 @@ void callback ( const geometry_msgs::Twist &vel )
 //    MoveWithVelocity ( g_pKeyHandle, 1, ( long ) (v1/r*scaler), &ulErrorCode );
 //    MoveWithVelocity ( g_pKeyHandle, 2, ( long ) (v2/r*scaler), &ulErrorCode );
 //    MoveWithVelocity ( g_pKeyHandle, 3, ( long ) (v3/r*scaler), &ulErrorCode );
-
     MoveWithVelocity ( g_pKeyHandle, 2, ( long ) (v1/r*scaler), &ulErrorCode );
     MoveWithVelocity ( g_pKeyHandle, 3, ( long ) (v2/r*scaler), &ulErrorCode );
     MoveWithVelocity ( g_pKeyHandle, 1, ( long ) (v3/r*scaler), &ulErrorCode );
-    
-//     ros::Time end = ros::Time::now();
-//     diff.data = end - start;
-//     time_diff.publish ( diff );
-//     cout<<"time taken:"<<diff<<endl;
 
 }
 
@@ -60,15 +49,24 @@ int main ( int argc, char **argv )
 
     //Activate all drivers
     SetEnableState ( g_pKeyHandle, 1, &ulErrorCode );
-    ActivateProfileVelocityMode ( g_pKeyHandle, 1, &ulErrorCode );
     SetEnableState ( g_pKeyHandle, 2, &ulErrorCode );
-    ActivateProfileVelocityMode ( g_pKeyHandle, 2, &ulErrorCode );
     SetEnableState ( g_pKeyHandle, 3, &ulErrorCode );
+    LogInfo("Enabling Drivers");
+
+    ActivateProfileVelocityMode ( g_pKeyHandle, 1, &ulErrorCode );
+    ActivateProfileVelocityMode ( g_pKeyHandle, 2, &ulErrorCode );
     ActivateProfileVelocityMode ( g_pKeyHandle, 3, &ulErrorCode );
 
     ros::init ( argc, argv, "control" );
     ros::NodeHandle n;
-    ros::Subscriber sub = n.subscribe ( "omnibase/cmd_vel" , 5 ,&callback );
-    ros::spin();
+	while (ros::ok()){
+        ros::Subscriber sub = n.subscribe ( "omnibase/cmd_vel" , 5 ,&callback );
+        ros::spin();
+}    
+     SetDisableState ( g_pKeyHandle, 1, &ulErrorCode );
+     SetDisableState ( g_pKeyHandle, 2, &ulErrorCode );
+     SetDisableState ( g_pKeyHandle, 3, &ulErrorCode );
+     LogInfo("Disabling Drivers"); 
+     return 0;
 }
 

@@ -1,0 +1,15 @@
+<!--
+DESCRITPION
+-->
+
+<launch>
+
+	<!-- Run base_controller.cpp -->
+	<node name="base_controller" pkg="omnibase" type="base_controller" output="screen"> </node>
+	<!-- Run lidar -->
+	<include file="$(find omnibase)/launch/lidar.launch" />
+	<!-- Run odometry -->
+	<node name="omni_odom" pkg="omnibase" type="omni_odom" output="screen"> </node>
+	<!-- Run Move_base
+	<include file="$(find omni_navigation)/launch/move_base_bot.launch" /> -->
+</launch>

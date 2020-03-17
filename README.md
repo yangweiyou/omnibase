@@ -44,6 +44,8 @@ omni_odom : calculates robot's odometry using cmd_vel and publishes /odom.
 
 pub_cmdvel: used for testing cmd_vel
 
+lidar_tf: publishes static tf for the hokuyo lidars
+
 ### include
 
 headings
@@ -54,8 +56,7 @@ use as a ros package, put the folder under workspace/src and compile with catkin
 
 	#under ${workspace}
 	catkin_make
-	roscore
-	rosrun omnibase base_controller
+	roslaunch omnibase omnibase.launch
 
 ## Benchmark
 

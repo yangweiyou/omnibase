@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<launch>
+
+<!-- A simple launch file for the urg_node package. -->
+
+<!--  When using an IP-connected LIDAR, populate the "ip_address" parameter with the address of the LIDAR.
+      Otherwise, leave it blank. If supported by your LIDAR, you may enable the publish_intensity
+      and/or publish_multiecho options. -->
+
+	<!-- Run static tf for lidars -->
+	<node name="lidar_tf" pkg="omnibase" type="lidar_tf" output="screen"> </node> 
+
+  <node name="lidar1" pkg="urg_node" type="urg_node" output="screen">
+    <param name="ip_address" value="192.168.0.10"/>
+    <param name="frame_id" value="laser1"/>
+    <remap from="/scan" to="/scan1"/>
+  </node>
+	
+</launch>

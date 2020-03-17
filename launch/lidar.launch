@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<launch>
+
+<!-- A simple launch file for the urg_node package. -->
+
+<!--  When using an IP-connected LIDAR, populate the "ip_address" parameter with the address of the LIDAR.
+      Otherwise, leave it blank. If supported by your LIDAR, you may enable the publish_intensity
+      and/or publish_multiecho options. -->
+
+  <node name="lidar1" pkg="urg_node" type="urg_node" output="screen">
+    <param name="ip_address" value="192.168.0.10"/>
+    <param name="frame_id" value="laser1"/>
+    <remap from="/scan" to="/scan1"/>
+  </node>
+
+  <node name="lidar2" pkg="urg_node" type="urg_node" output="screen">
+    <param name="ip_address" value="192.168.0.11"/>
+    <param name="frame_id" value="laser2"/>
+    <remap from="/scan" to="/scan2"/>
+  </node>
+	<!-- Run static tf for lidars -->
+	<node name="lidar_tf" pkg="omnibase" type="lidar_tf" output="screen"> </node> 
+
+	<!-- Merging laser scans -->
+        <node pkg="ira_laser_tools" name="laserscan_multi_merger" type="laserscan_multi_merger" output="screen">
+		<param name="destination_frame" value="/base_link"/>
+		<param name="cloud_destination_topic" value="/merged_cloud"/>
+		<param name="scan_destination_topic" value="/scan"/>
+                <param name="laserscan_topics" value ="/scan1 /scan2" /> <!-- LIST OF THE LASER SCAN TOPICS TO SUBSCRIBE -->
+	</node>
+
+</launch>

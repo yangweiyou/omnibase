@@ -142,8 +142,9 @@ message(${catkin_INCLUDE_DIRS})
 
 add_executable(testMotion src/testMotion.cpp src/wrap.cpp)
 add_executable(pub_cmdVel src/pub_cmdVel.cpp src/wrap.cpp)
-add_executable(omni_odom src/omni_odom.cpp src/wrap.cpp)
+add_executable(omni_odom src/omni_odom.cpp)
 add_executable(base_controller src/base_controller.cpp src/wrap.cpp)
+add_executable(lidar_tf src/lidar_tf.cpp)
 
 
 ## Rename C++ executable without prefix
@@ -158,7 +159,7 @@ add_dependencies(testMotion omnibase_gencpp)
 add_dependencies(base_controller omnibase_gencpp)
 add_dependencies(pub_cmdVel omnibase_gencpp)
 add_dependencies(omni_odom omnibase_gencpp)
-
+add_dependencies(lidar_tf omnibase_gencpp)
 ## Specify libraries to link a library or executable target against
 
 target_link_libraries(testMotion
@@ -178,7 +179,10 @@ target_link_libraries(pub_cmdVel
 
 target_link_libraries(omni_odom
   ${catkin_LIBRARIES}
-  EposCmd
+)
+
+target_link_libraries(lidar_tf
+  ${catkin_LIBRARIES}
 )
 #############
 ## Install ##

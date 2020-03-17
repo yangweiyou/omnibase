@@ -193,7 +193,7 @@ int SetEnableState(void* g_pKeyHandle, unsigned short g_usNodeId, unsigned int* 
 			}
 		}
 	}
-	LogInfo("Enable EPOS");
+	//LogInfo("Enable EPOS");
 	return lResult;
 }
 
@@ -206,7 +206,7 @@ int SetDisableState(void* g_pKeyHandle, unsigned short g_usNodeId, unsigned int*
 		LogError("VCS_SetDisableState", lResult, lErrorCode);
 		lResult = MMC_FAILED;
 	}
-	LogInfo("Disable EPOS");
+	//LogInfo("Disable EPOS");
 	return lResult;
 }
 
@@ -385,8 +385,8 @@ int MoveWithVelocity(void* p_DeviceHandle, unsigned short p_usNodeId, long Targe
 		LogError("VCS_MoveWithVelocity", lResult, *p_pErrorCode);
 		lResult = MMC_FAILED;
 	}
-	msg << "MoveWithVelocity:" << TargetVelocity ;
-	LogInfo(msg.str());
+	//msg << "MoveWithVelocity:" << TargetVelocity ;
+	//LogInfo(msg.str());
 	return lResult;
 }
 
